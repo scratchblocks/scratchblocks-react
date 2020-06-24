@@ -1,0 +1,27 @@
+{
+  "name": "scratchblocks-react",
+  "version": "1.0.0",
+  "description": "Render scratchblocks in React",
+  "main": "dist/index.js",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist/ && tsc",
+    "prepare": "npm run build",
+    "watch": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^16.9.38",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0-0",
+    "scratchblocks": "^3.5.0"
+  },
+  "dependencies": {}
+}
