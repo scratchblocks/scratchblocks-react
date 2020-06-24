@@ -11,43 +11,23 @@ const ScratchBlocks: React.FunctionComponent<Props> = ({
   blockStyle,
   languages,
   children,
-  id,
   ...props
 }) => {
   const ref = React.useRef(null)
 
   React.useEffect(() => {
-    let options: any = {
-      // Don't read text from the DOM. Just use `children`.
-      read: () => children,
-
-      // Insert the svg directly (rather than inside an additional container element)
-      replace: (el, svg) => {
-        el.innerHTML = ""
-        el.appendChild(svg)
-      },
-    }
-
-    // Pass in user-provided options
+    let options: any = {}
     if (blockStyle !== undefined) options.style = blockStyle
     if (languages !== undefined) options.languages = languages
 
-    // The element needs an id so scratchblocks can find it.
-    // If it doesn't already have an id, generate one automatically.
-    if (!id) {
-      ref.current.id =
-        "ScratchBlocks-" + Math.random().toString(16).slice(2, 10)
-    }
+    const doc = scratchblocks.parse(children, options)
+    const svg = scratchblocks.render(doc, options)
 
-    scratchblocks.renderMatching("#" + ref.current.id, options)
+    ref.current.innerHTML = ""
+    ref.current.appendChild(svg)
+  }, [blockStyle, languages, children])
 
-    // If we added a temporary id ealier, remove it now.
-    if (!id) {
-      ref.current.removeAttribute("id")
-    }
-  }, [children, blockStyle, languages, id])
-
-  return <div ref={ref} id={id} {...props} />
+  return <div ref={ref} {...props} />
 }
 
 export default ScratchBlocks
